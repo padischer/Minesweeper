@@ -6,7 +6,15 @@ namespace Minesweeper
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+
+
+            Field f1 = new Field();
+
+
+            Console.WriteLine((f1.IsBomb));
+
+            Console.ReadKey();
+
         }
     }
 }
