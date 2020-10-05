@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.MemoryMappedFiles;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -11,10 +12,16 @@ namespace Minesweeper
         Random rnd = new  Random();
         
         internal bool IsBomb { get; set; }
-        internal int Value { get; set; }
+
+        public Field Right { get; set; }
+        public Field Left { get; set; }
 
 
 
+        internal int setValue()
+        {
+
+        }
 
 
         public Field()

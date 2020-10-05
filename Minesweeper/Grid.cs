@@ -7,23 +7,32 @@ namespace Minesweeper
     class Grid
     {
         private int Width { get; set; }
-        private int Length { get; set; }
+        private int Height { get; set; }
 
-        public Grid CreateGrid()
+        
+
+        public Grid(int width, int height)
         {
-            Console.WriteLine("Bitte geben sie eine breite vn 8 bis 26 ein");
-            var widthzs= int.Parse(Console.ReadLine());
-            Console.WriteLine("Bitte geben sie eine Länge vn 8 bis 26 ein");
-            var lengthzs = int.Parse(Console.ReadLine());
+            
 
-            return new Grid()
+
+            for (int i = 0; i < Height; i++)
             {
-                Width = widthzs,
-                Length = lengthzs
-            };
+                var FirstOfRow = new Field();
+
+
+
+
+
+                var CurrentField = new Field();
+                for (int j = 0; j < Width; j++)
+                {
+                    var newField = new Field();
+                }
+
+            }
+
         }
-
-
 
 
     }
