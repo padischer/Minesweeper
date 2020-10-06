@@ -8,31 +8,66 @@ namespace Minesweeper
     {
         private int Width { get; set; }
         private int Height { get; set; }
+        public Field TopLeftField { get; set; }
 
-        
 
         public Grid(int width, int height)
         {
-            
+            Width = width;
+            Height = height;
 
-
+            TopLeftField = null;
+            Field FirstOfRow = null;
             for (int i = 0; i < Height; i++)
             {
-                var FirstOfRow = new Field();
+                FirstOfRow = new Field();
 
-
-
-
-
-                var CurrentField = new Field();
-                for (int j = 0; j < Width; j++)
+                if (i == 0)
                 {
-                    var newField = new Field();
+                    TopLeftField = FirstOfRow;
                 }
 
+
+
+
+                
+                Field CurrentField = null;
+                for (int j = 0; j < Width; j++)
+                {
+
+                    
+
+                    if (j == 0)
+                    {
+                        CurrentField = FirstOfRow;
+                    }
+
+                    var NewField = new Field();
+                    
+
+                    if (j != Width-1)
+                    {
+                        CurrentField.Right = NewField;
+                        NewField.Left = CurrentField;
+
+                    }
+
+                    CurrentField = NewField;
+                    CurrentField.Value = 50000000+j;
+                    
+
+                }
+
+
+                
             }
 
+            
+
         }
+
+
+        
 
 
     }

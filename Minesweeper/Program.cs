@@ -15,7 +15,7 @@ namespace Minesweeper
 
             while (ValidnumHeight == false)
             {
-                Console.WriteLine("Bitte geben sie eine Länge vn 8 bis 26 ein");
+                Console.WriteLine("Bitte geben sie eine Länge von 8 bis 26 ein");
                 Height = int.Parse(Console.ReadLine());
                 if (Height >= 8 && Height <= 26)
                 {
@@ -34,7 +34,7 @@ namespace Minesweeper
                 Width = int.Parse(Console.ReadLine());
                 if (Width >= 8 && Width <= 26)
                 {
-                    ValidnumHeight = true;
+                    ValidnumWidth = true;
                 }
                 else
                 {
@@ -48,10 +48,15 @@ namespace Minesweeper
 
         static void Main(string[] args)
         {
-            CreateGrid();
+            var Grid = CreateGrid();
+            Field temp = Grid.TopLeftField;
+            while (temp.Right != null)
+            {
+                Console.WriteLine(temp.IsBomb);
+                temp = temp.Right;
+            }
 
-
-
+            Console.WriteLine(temp.IsBomb);
         }
     }
 }
