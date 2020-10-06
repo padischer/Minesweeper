@@ -53,38 +53,21 @@ namespace Minesweeper
             Field tempX = Grid.TopLeftField;
 
 
-            //while (tempX.Right != null)
-            //{
-            //    tempY = tempX;
-            //    while (tempY.Bottom != null)
-            //    {
-            //        Console.WriteLine(tempY.Value);
-            //        tempY = tempY.Bottom;
-            //    }
-            //    Console.WriteLine(tempY.Value);
-            //    tempX = tempX.Right;
-            //}
-            //while (tempY.Bottom != null)
-            //{
-            //    Console.WriteLine(tempY.Value);
-            //    tempY = tempY.Bottom;
-            //}
 
 
 
 
-            while (tempX.Right != null)
+            while (tempY != null)
             {
+                tempX = tempY;
 
-                tempY = tempX;
-
-                while (tempY.Bottom != null)
+                while (tempX.Right != null)
                 {
-                    Console.Write(tempY.Value);
-                    tempY = tempY.Bottom;
+                    Console.Write($"{tempX.Value}   ");
+                    tempX = tempX.Right;
                 }
-                Console.WriteLine(tempY.Value);
-                tempX = tempX.Right;
+                Console.WriteLine(tempX.Value);
+                tempY = tempY.Bottom;
             }
         }
 

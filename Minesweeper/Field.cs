@@ -17,8 +17,8 @@ namespace Minesweeper
         public Field Left { get; set; }
         public  Field Top { get; set; }
         public  Field Bottom { get; set; }
-
-
+        internal string HorizontalName { get; set; }
+        internal string VerticalName { get; set; }
 
         public Field()
         {
