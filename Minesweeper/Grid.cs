@@ -20,6 +20,7 @@ namespace Minesweeper
             Field FirstOfRow = null;
             for (int i = 0; i < Height; i++)
             {
+                Field LastFirstOfRow = FirstOfRow;
                 FirstOfRow = new Field();
 
                 if (i == 0)
@@ -52,10 +53,22 @@ namespace Minesweeper
 
                     }
 
-                    CurrentField = NewField;
-                    CurrentField.Value = 50000000+j;
+                    if (i != 0)
+                    {
+                        LastFirstOfRow.Bottom = CurrentField;
+                        CurrentField.Top = LastFirstOfRow;
+                    }
+
                     
 
+                    CurrentField = NewField;
+                    
+                    CurrentField.Value = 1+j;
+
+                    if (i != 0)
+                    {
+                        LastFirstOfRow = LastFirstOfRow.Right;
+                    }
                 }
 
 

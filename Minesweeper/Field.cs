@@ -15,8 +15,8 @@ namespace Minesweeper
         internal  int Value { get; set; }
         public Field Right { get; set; }
         public Field Left { get; set; }
-
-
+        public  Field Top { get; set; }
+        public  Field Bottom { get; set; }
 
 
 

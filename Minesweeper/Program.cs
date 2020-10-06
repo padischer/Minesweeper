@@ -49,14 +49,46 @@ namespace Minesweeper
         static void Main(string[] args)
         {
             var Grid = CreateGrid();
-            Field temp = Grid.TopLeftField;
-            while (temp.Right != null)
-            {
-                Console.WriteLine(temp.IsBomb);
-                temp = temp.Right;
-            }
+            Field tempY = Grid.TopLeftField;
+            Field tempX = Grid.TopLeftField;
 
-            Console.WriteLine(temp.IsBomb);
+
+            //while (tempX.Right != null)
+            //{
+            //    tempY = tempX;
+            //    while (tempY.Bottom != null)
+            //    {
+            //        Console.WriteLine(tempY.Value);
+            //        tempY = tempY.Bottom;
+            //    }
+            //    Console.WriteLine(tempY.Value);
+            //    tempX = tempX.Right;
+            //}
+            //while (tempY.Bottom != null)
+            //{
+            //    Console.WriteLine(tempY.Value);
+            //    tempY = tempY.Bottom;
+            //}
+
+
+
+
+            while (tempX.Right != null)
+            {
+
+                tempY = tempX;
+
+                while (tempY.Bottom != null)
+                {
+                    Console.Write(tempY.Value);
+                    tempY = tempY.Bottom;
+                }
+                Console.WriteLine(tempY.Value);
+                tempX = tempX.Right;
+            }
         }
+
+
+        
     }
 }
