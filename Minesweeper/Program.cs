@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Channels;
 
 namespace Minesweeper
 {
@@ -41,37 +42,25 @@ namespace Minesweeper
                     Console.WriteLine("Bitte eine richtige Zahl eingeben");
                 }
             }
+
             return new Grid(Width, Height);
         }
 
 
 
+
+
         static void Main(string[] args)
         {
-            var Grid = CreateGrid();
-            Field tempY = Grid.TopLeftField;
-            Field tempX = Grid.TopLeftField;
-
-
-
-
-
-
-            while (tempY != null)
-            {
-                tempX = tempY;
-
-                while (tempX.Right != null)
-                {
-                    Console.Write($"{tempX.Value}   ");
-                    tempX = tempX.Right;
-                }
-                Console.WriteLine(tempX.Value);
-                tempY = tempY.Bottom;
-            }
+            
+            var grid = CreateGrid();
+            Console.Clear();
+            grid.ShowGrid();
+            string Position = grid.GetPositionOfField();
+            grid.InteractWithSpecificField(Position);
         }
 
 
-        
+
     }
 }

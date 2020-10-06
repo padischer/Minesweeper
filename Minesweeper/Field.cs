@@ -9,16 +9,17 @@ namespace Minesweeper
     class Field
     {
 
-        Random rnd = new  Random();
-        
+        Random rnd = new Random();
+
         internal bool IsBomb { get; set; }
-        internal  int Value { get; set; }
+        internal int Value { get; set; }
         public Field Right { get; set; }
         public Field Left { get; set; }
-        public  Field Top { get; set; }
-        public  Field Bottom { get; set; }
-        internal string HorizontalName { get; set; }
-        internal string VerticalName { get; set; }
+        public Field Top { get; set; }
+        public Field Bottom { get; set; }
+        internal string HorizontalCoordinate { get; set; }
+        internal int VerticalCoordinate { get; set; }
+
 
         public Field()
         {
@@ -35,5 +36,6 @@ namespace Minesweeper
             }
         }
 
+        
     }
 }

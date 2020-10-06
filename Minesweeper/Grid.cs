@@ -6,8 +6,8 @@ namespace Minesweeper
 {
     class Grid
     {
-        private int Width { get; set; }
-        private int Height { get; set; }
+        internal int Width { get; set; }
+        internal int Height { get; set; }
         public Field TopLeftField { get; set; }
 
 
@@ -59,11 +59,13 @@ namespace Minesweeper
                         CurrentField.Top = LastFirstOfRow;
                     }
 
-                    
+                    CurrentField.Value = j;
+                    CurrentField.VerticalCoordinate = i;
+                    CurrentField.HorizontalCoordinate = char.ToUpper((char) (i + (int) 'a')) + " ";
 
                     CurrentField = NewField;
                     
-                    CurrentField.Value = 1+j;
+                    
 
                     if (i != 0)
                     {
@@ -80,7 +82,99 @@ namespace Minesweeper
         }
 
 
+        public void ShowGrid()
+        {
+            Field tempY = TopLeftField;
+            Field tempX = TopLeftField;
+            int count = 0;
+
+            Console.Write("      ");
+            //Console.Write("    ");
+            for (int i = 0; i < Width; i++)
+            {
+                Console.Write(char.ToUpper((char)(i + (int)'a')) + " ");
+
+
+            }
+
+            Console.WriteLine();
+            Console.Write("      ");
+            for (int i = 0; i < Width; i++)
+            {
+
+                Console.Write("--");
+            }
+            Console.WriteLine();
+
+            while (tempY != null)
+            {
+
+                count++;
+                Console.Write($"{count} ");
+
+
+                tempX = tempY;
+
+                
+                if (count < 10)
+                {
+                    Console.Write(" ");
+                }
+
+                Console.Write("|| ");
+                while (tempX.Right != null)
+                {
+                    Console.Write($"{tempX.Value} ");
+                    tempX = tempX.Right;
+                    
+                }
+                Console.WriteLine(tempX.Value);
+
+                tempY = tempY.Bottom;
+            }
+        }
+
+        internal string GetPositionOfField()
+        {
+            string Input;
+            Console.WriteLine("Bitte geben sie die Position des Feldes ein, welches sie Bearbeiten möchten (Bsp. A2)");
+            Input = Console.ReadLine();
+            return Input;
+        }
+
         
+        internal void InteractWithSpecificField(string Input)
+        {
+            string XNotConverted = Input.Substring(0, 1);
+            char XConverter = XNotConverted[0];
+            string YConverter = Input.Substring(1, Input.Length-1);
+            int y = (int.Parse(YConverter)-41);
+            int x= (int)XConverter - 41;
+            Field Position = null;
+            
+            for (int i = 0; i < x; i++)
+            {
+                TopLeftField = TopLeftField.Bottom;
+
+            }
+
+            for (int i = 0; i < y; i++)
+            {
+                TopLeftField = TopLeftField.Right;
+            }
+
+            Console.WriteLine(TopLeftField.Value);
+
+            //for (int i = 0; i < ; i++)
+           // {
+                
+           // }
+
+
+        }
+
+        
+
 
 
     }
