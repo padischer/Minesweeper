@@ -9,7 +9,7 @@ namespace Minesweeper
         internal int Width { get; set; }
         internal int Height { get; set; }
         public Field TopLeftField { get; set; }
-
+        private int Count = 0;
 
         public Grid(int width, int height)
         {
@@ -20,6 +20,7 @@ namespace Minesweeper
             Field FirstOfRow = null;
             for (int i = 0; i < Height; i++)
             {
+                Count++;
                 Field LastFirstOfRow = FirstOfRow;
                 FirstOfRow = new Field();
 
@@ -35,7 +36,7 @@ namespace Minesweeper
                 Field CurrentField = null;
                 for (int j = 0; j < Width; j++)
                 {
-
+                    Count++;
                     
 
                     if (j == 0)
@@ -59,7 +60,7 @@ namespace Minesweeper
                         CurrentField.Top = LastFirstOfRow;
                     }
 
-                    CurrentField.Value = j;
+                    CurrentField.Value = Count;
 
                     CurrentField = NewField;
                     
@@ -147,7 +148,7 @@ namespace Minesweeper
             char XConverter = XNotConverted[0];
             string YConverter = Input.Substring(1, Input.Length-1);
             int y = (int.Parse(YConverter));
-            int x = (int) XConverter - 76;
+            int x = (int) XConverter - 65;
             Field Position = null;
             
             for (int i = 0; i < x; i++)
@@ -156,7 +157,7 @@ namespace Minesweeper
 
             }
 
-            for (int i = 0; i < y; i++)
+            for (int i = 1; i < y; i++)
             {
                 TopLeftField = TopLeftField.Bottom;
                 
