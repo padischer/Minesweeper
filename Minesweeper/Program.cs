@@ -46,15 +46,24 @@ namespace Minesweeper
             return new Grid(Width, Height);
         }
 
+        static void End()
+        {
+            return;
+        }
 
         static void Main(string[] args)
         {
-            
+            bool breakout = true;
             var grid = CreateGrid();
-            Console.Clear();
-            grid.ShowGrid();
-            string Position = grid.GetPositionOfField();
-            grid.InteractWithSpecificField(Position);
+
+            while (grid.GameOver == false) 
+            {
+                Console.Clear();
+                grid.ShowGrid();
+                string Position = grid.GetPositionOfField();
+                grid.InteractWithSpecificField(Position);
+
+            }
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Minesweeper
         internal int Height { get; set; }
         public Field TopLeftField { get; set; }
         private int Count = 0;
-
+        internal bool GameOver = false;
         public Grid(int width, int height)
         {
             Width = width;
@@ -60,7 +60,7 @@ namespace Minesweeper
                         CurrentField.Top = LastFirstOfRow;
                     }
 
-                    CurrentField.Value = Count;
+                    CurrentField.Value = "?";
 
                     CurrentField = NewField;
                     
@@ -80,6 +80,8 @@ namespace Minesweeper
 
         }
 
+
+        
 
         public void ShowGrid()
         {
@@ -123,6 +125,7 @@ namespace Minesweeper
                 Console.Write("|| ");
                 while (tempX.Right != null)
                 {
+                    
                     Console.Write($"{tempX.Value} ");
                     tempX = tempX.Right;
                     
@@ -144,32 +147,34 @@ namespace Minesweeper
         
         internal void InteractWithSpecificField(string Input)
         {
+            var Controler = TopLeftField;
             string XNotConverted = Input.Substring(0, 1);
             char XConverter = XNotConverted[0];
             string YConverter = Input.Substring(1, Input.Length-1);
             int y = (int.Parse(YConverter));
             int x = (int) XConverter - 65;
-            Field Position = null;
-            
+
             for (int i = 0; i < x; i++)
             {
-                TopLeftField = TopLeftField.Right;
-
+                
+                Controler = Controler.Right;
             }
 
             for (int i = 1; i < y; i++)
             {
-                TopLeftField = TopLeftField.Bottom;
-                
+                Controler = Controler.Bottom;
             }
 
-            Console.WriteLine(TopLeftField.Value);
+            if (Controler.IsBomb == false)
+            {
+                Controler.Value = Controler.CountBombsinArea().ToString();
+            }
+            else
+            {
+                Console.WriteLine("GAME OVER IT WAS A BOMB");
+                GameOver = true;
 
-            //for (int i = 0; i < ; i++)
-           // {
-                
-           // }
-
+            }
 
         }
 
@@ -178,5 +183,5 @@ namespace Minesweeper
 
 
     }
-
+    
 }
