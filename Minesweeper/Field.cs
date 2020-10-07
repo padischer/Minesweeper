@@ -12,8 +12,8 @@ namespace Minesweeper
         Random rnd = new Random();
 
         internal bool IsBomb { get; set; }
+        internal bool IsFlagged { get; set; }
         internal string Value { get; set; }
-        internal string HiddenValue { get; set; }
         public Field Right { get; set; }
         public Field Left { get; set; }
         public Field Top { get; set; }
@@ -27,7 +27,6 @@ namespace Minesweeper
             if (randomnumber < 16)
             {
                 IsBomb = true;
-                HiddenValue = "B";
             }
             else
             {
@@ -98,16 +97,7 @@ namespace Minesweeper
                 }
 
             }
-
-            
-
             return BombCount;
         }
-
-        
-
-
-
-       
     }
 }

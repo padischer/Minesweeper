@@ -53,7 +53,7 @@ namespace Minesweeper
 
         static void Main(string[] args)
         {
-            bool breakout = true;
+
             var grid = CreateGrid();
 
             while (grid.GameOver == false) 
@@ -62,7 +62,11 @@ namespace Minesweeper
                 grid.ShowGrid();
                 string Position = grid.GetPositionOfField();
                 grid.InteractWithSpecificField(Position);
-
+                if (grid.WinCon == 0)
+                {
+                    Console.WriteLine("YOU WON ALL MINES HAVE BEEN FLAGGED");
+                    return;
+                }
             }
         }
     }

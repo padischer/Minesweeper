@@ -11,6 +11,7 @@ namespace Minesweeper
         public Field TopLeftField { get; set; }
         private int Count = 0;
         internal bool GameOver = false;
+        internal int WinCon;
         public Grid(int width, int height)
         {
             Width = width;
@@ -61,7 +62,11 @@ namespace Minesweeper
                     }
 
                     CurrentField.Value = "?";
-
+                    
+                    if (CurrentField.IsBomb)
+                    {
+                        WinCon++;
+                    }
                     CurrentField = NewField;
                     
                     
@@ -147,6 +152,10 @@ namespace Minesweeper
         
         internal void InteractWithSpecificField(string Input)
         {
+            
+            
+
+
             var Controler = TopLeftField;
             string XNotConverted = Input.Substring(0, 1);
             char XConverter = XNotConverted[0];
@@ -165,16 +174,57 @@ namespace Minesweeper
                 Controler = Controler.Bottom;
             }
 
-            if (Controler.IsBomb == false)
-            {
-                Controler.Value = Controler.CountBombsinArea().ToString();
-            }
-            else
-            {
-                Console.WriteLine("GAME OVER IT WAS A BOMB");
-                GameOver = true;
+            Console.WriteLine("Was möchten sie in bei diesem Feld machen?");
+            Console.WriteLine("1:Flag Field\t2:Unflag Field\t3:Uncover Field");
+            string EditField = Console.ReadLine();
 
+            switch (EditField)
+            {
+                case "1":
+                    if (Controler.IsFlagged == true)
+                    {
+                        Console.WriteLine("Field is already flagged");
+                        Console.ReadLine();
+                    }
+                    else
+                    {
+                        Controler.IsFlagged = true;
+                        Controler.Value = "F";
+                        WinCon--;
+                    }
+                    break;
+                case "2":
+                    if (Controler.IsFlagged == true)
+                    {
+                        Controler.IsFlagged = false;
+                        Controler.Value = "?";
+                        if (Controler.IsBomb)
+                        {
+                            WinCon++;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Field is already unflagged");
+                        Console.ReadLine();
+                    }
+                    
+                    break;
+                case "3":
+                    if (Controler.IsBomb == false)
+                    {
+                        Controler.Value = Controler.CountBombsinArea().ToString();
+                    }
+                    else
+                    {
+                        Console.WriteLine("GAME OVER IT WAS A BOMB");
+                        GameOver = true;
+
+                    }
+                    break;
             }
+
+            
 
         }
 
