@@ -16,30 +16,46 @@ namespace Minesweeper
 
             while (ValidnumHeight == false)
             {
-                Console.WriteLine("Bitte geben sie eine Länge von 8 bis 26 ein");
-                Height = int.Parse(Console.ReadLine());
-                if (Height >= 8 && Height <= 26)
+                try
                 {
-                    ValidnumHeight = true;
+                    Console.WriteLine("Bitte geben sie eine Länge von 8 bis 26 ein");
+                    Height = int.Parse(Console.ReadLine());
+                    if (Height >= 8 && Height <= 26)
+                    {
+                        ValidnumHeight = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Bitte eine richtige Zahl eingeben");
+                    }
+                
                 }
-                else
+                catch (System.FormatException)
                 {
-                    Console.WriteLine("Bitte eine richtige Zahl eingeben");
+                    Console.WriteLine("Das ist keine gültige zahl");
                 }
-
+                
+                
             }
 
             while (ValidnumWidth == false)
             {
-                Console.WriteLine("Bitte geben sie eine breite vn 8 bis 26 ein");
-                Width = int.Parse(Console.ReadLine());
-                if (Width >= 8 && Width <= 26)
+                try
                 {
-                    ValidnumWidth = true;
+                    Console.WriteLine("Bitte geben sie eine breite vn 8 bis 26 ein");
+                    Width = int.Parse(Console.ReadLine());
+                    if (Width >= 8 && Width <= 26)
+                    {
+                        ValidnumWidth = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Bitte eine richtige Zahl eingeben");
+                    }
                 }
-                else
+                catch (System.FormatException)
                 {
-                    Console.WriteLine("Bitte eine richtige Zahl eingeben");
+                    Console.WriteLine("Das ist keine gültige zahl");
                 }
             }
 
@@ -61,7 +77,8 @@ namespace Minesweeper
                 Console.Clear();
                 grid.ShowGrid();
                 string Position = grid.GetPositionOfField();
-                grid.InteractWithSpecificField(Position);
+                string Interaction = grid.GetEditOfField();
+                grid.EditField(grid.GetSpecificField(Position), Interaction);
                 if (grid.WinCon == 0)
                 {
                     Console.WriteLine("YOU WON ALL MINES HAVE BEEN FLAGGED");

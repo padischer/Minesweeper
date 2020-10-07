@@ -144,18 +144,22 @@ namespace Minesweeper
         internal string GetPositionOfField()
         {
             string Input;
-            Console.WriteLine("Bitte geben sie die Position des Feldes ein, welches sie Bearbeiten möchten (Bsp. A2)");
-            Input = Console.ReadLine();
-            return Input;
+
+            while (true)
+            {
+                Console.WriteLine("Bitte geben sie die Position des Feldes ein, welches sie Bearbeiten möchten (Bsp. A2)");
+                Input = Console.ReadLine();
+                if (Input.Length < 3 && Input.Length > 0) ;
+                {
+                    return Input;
+                }
+                
+            }
         }
 
         
-        internal void InteractWithSpecificField(string Input)
+        internal Field GetSpecificField(string Input)
         {
-            
-            
-
-
             var Controler = TopLeftField;
             string XNotConverted = Input.Substring(0, 1);
             char XConverter = XNotConverted[0];
@@ -174,10 +178,20 @@ namespace Minesweeper
                 Controler = Controler.Bottom;
             }
 
+            return Controler;
+
+        }
+
+        public string GetEditOfField()
+        {
             Console.WriteLine("Was möchten sie in bei diesem Feld machen?");
             Console.WriteLine("1:Flag Field\t2:Unflag Field\t3:Uncover Field");
             string EditField = Console.ReadLine();
+            return EditField;
+        }
 
+        public void EditField(Field Controler, string EditField)
+        {
             switch (EditField)
             {
                 case "1":
@@ -208,7 +222,7 @@ namespace Minesweeper
                         Console.WriteLine("Field is already unflagged");
                         Console.ReadLine();
                     }
-                    
+
                     break;
                 case "3":
                     if (Controler.IsBomb == false)
@@ -223,12 +237,7 @@ namespace Minesweeper
                     }
                     break;
             }
-
-            
-
         }
-
-        
 
 
 
