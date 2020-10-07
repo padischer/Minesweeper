@@ -60,8 +60,6 @@ namespace Minesweeper
                     }
 
                     CurrentField.Value = j;
-                    CurrentField.VerticalCoordinate = i;
-                    CurrentField.HorizontalCoordinate = char.ToUpper((char) (i + (int) 'a')) + " ";
 
                     CurrentField = NewField;
                     
@@ -148,19 +146,20 @@ namespace Minesweeper
             string XNotConverted = Input.Substring(0, 1);
             char XConverter = XNotConverted[0];
             string YConverter = Input.Substring(1, Input.Length-1);
-            int y = (int.Parse(YConverter)-41);
-            int x= (int)XConverter - 41;
+            int y = (int.Parse(YConverter));
+            int x = (int) XConverter - 76;
             Field Position = null;
             
             for (int i = 0; i < x; i++)
             {
-                TopLeftField = TopLeftField.Bottom;
+                TopLeftField = TopLeftField.Right;
 
             }
 
             for (int i = 0; i < y; i++)
             {
-                TopLeftField = TopLeftField.Right;
+                TopLeftField = TopLeftField.Bottom;
+                
             }
 
             Console.WriteLine(TopLeftField.Value);

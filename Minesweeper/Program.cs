@@ -47,9 +47,6 @@ namespace Minesweeper
         }
 
 
-
-
-
         static void Main(string[] args)
         {
             
@@ -59,8 +56,5 @@ namespace Minesweeper
             string Position = grid.GetPositionOfField();
             grid.InteractWithSpecificField(Position);
         }
-
-
-
     }
 }
