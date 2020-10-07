@@ -8,7 +8,7 @@ namespace Minesweeper
 {
     class Field
     {
-
+        
         Random rnd = new Random();
 
         internal bool IsBomb { get; set; }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace Minesweeper
@@ -160,25 +161,44 @@ namespace Minesweeper
         
         internal Field GetSpecificField(string Input)
         {
-            var Controler = TopLeftField;
-            string XNotConverted = Input.Substring(0, 1);
-            char XConverter = XNotConverted[0];
-            string YConverter = Input.Substring(1, Input.Length-1);
-            int y = (int.Parse(YConverter));
-            int x = (int) XConverter - 65;
-
-            for (int i = 0; i < x; i++)
+            
+            try
             {
+                var Controler = TopLeftField;
+
+                string XString = Input.Substring(0, 1);
+                char XConverter = XString[0];
+                int x = (int)XConverter - 65;
+
+                string YConverter = Input.Substring(1, Input.Length - 1);
+                int y = (int.Parse(YConverter));
                 
-                Controler = Controler.Right;
-            }
 
-            for (int i = 1; i < y; i++)
+                for (int i = 0; i < x; i++)
+                {
+
+                    Controler = Controler.Right;
+                }
+
+                for (int i = 1; i < y; i++)
+                {
+                    Controler = Controler.Bottom;
+                }
+
+                return Controler;
+            }
+            catch (System.FormatException)
             {
-                Controler = Controler.Bottom;
+                Console.WriteLine("Falsche Eingabe");
+                //bootleg Lösung
+                return TopLeftField;
             }
-
-            return Controler;
+            catch (System.NullReferenceException)
+            {
+                Console.WriteLine("Error NullException");
+                //bootleg Lösung
+                return TopLeftField;
+            }
 
         }
 
@@ -194,49 +214,51 @@ namespace Minesweeper
         {
             switch (EditField)
             {
-                case "1":
-                    if (Controler.IsFlagged == true)
-                    {
-                        Console.WriteLine("Field is already flagged");
-                        Console.ReadLine();
-                    }
-                    else
-                    {
-                        Controler.IsFlagged = true;
-                        Controler.Value = "F";
-                        WinCon--;
-                    }
-                    break;
-                case "2":
-                    if (Controler.IsFlagged == true)
-                    {
-                        Controler.IsFlagged = false;
-                        Controler.Value = "?";
-                        if (Controler.IsBomb)
-                        {
-                            WinCon++;
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Field is already unflagged");
-                        Console.ReadLine();
-                    }
+                 case "1":
+                     if (Controler.IsFlagged == true)
+                     {
+                         Console.WriteLine("Field is already flagged");
+                         Console.ReadLine();
+                     }
+                     else
+                     {
+                         Controler.IsFlagged = true;
+                         Controler.Value = "F";
+                         WinCon--;
+                     }
+                     break;
+                 case "2":
+                     if (Controler.IsFlagged == true)
+                     {
+                         Controler.IsFlagged = false;
+                         Controler.Value = "?";
+                         if (Controler.IsBomb)
+                         {
+                             WinCon++;
+                         }
+                     }
+                     else
+                     {
+                         Console.WriteLine("Field is already unflagged");
+                         Console.ReadLine();
+                     }
 
-                    break;
-                case "3":
-                    if (Controler.IsBomb == false)
-                    {
-                        Controler.Value = Controler.CountBombsinArea().ToString();
-                    }
-                    else
-                    {
-                        Console.WriteLine("GAME OVER IT WAS A BOMB");
-                        GameOver = true;
+                     break;
+                 case "3":
+                     if (Controler.IsBomb == false)
+                     {
+                         Controler.Value = Controler.CountBombsinArea().ToString();
+                     }
+                     else
+                     {
+                         Console.WriteLine("GAME OVER IT WAS A BOMB");
+                         GameOver = true;
 
-                    }
-                    break;
+                     }
+                     break;
             }
+
+            
         }
 
 
