@@ -26,8 +26,8 @@ namespace Minesweeper
         public Field()
         {
             int randomnumber;
-            randomnumber = rnd.Next(1, 100);
-            if (randomnumber < 16)
+            randomnumber = rnd.Next(16, 100);
+            if (randomnumber < 2)
             {
                 IsBomb = true;
             }

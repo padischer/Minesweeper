@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Threading.Channels;
+using System.Timers;
 
 namespace Minesweeper
 {
     class Program
     {
-
+        
         //getting input for Grid
         private static Grid CreateGrid()
         {
@@ -65,14 +66,17 @@ namespace Minesweeper
             return new Grid(Width, Height);
         }
 
+        
         //Main function
         static void Main(string[] args)
         {
+            Stopwatch timer = new Stopwatch();
             //Creating a Variable to access Grid
             var grid = CreateGrid();
-
+            timer.StartTimer();
             while (grid.GameOver == false) 
             {
+
                 //Usual Grid out and input
                 Console.Clear();
                 grid.ShowGrid();
@@ -83,6 +87,7 @@ namespace Minesweeper
                 //Winning
                 if (grid.WinCon == 0)
                 {
+                    timer.EndTimer();
                     Console.WriteLine("YOU WON ALL MINES HAVE BEEN FLAGGED");
                     return;
                 }

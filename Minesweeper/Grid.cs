@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 
 namespace Minesweeper
@@ -11,7 +12,6 @@ namespace Minesweeper
         internal int Width { get; set; }
         internal int Height { get; set; }
         public Field TopLeftField { get; set; }
-        private int Count = 0;
         internal bool GameOver = false;
         internal int WinCon;
 
@@ -28,7 +28,6 @@ namespace Minesweeper
             //for-loop for the height
             for (int i = 0; i < Height; i++)
             {
-                Count++;
                 Field LastFirstOfRow = FirstOfRow;
                 FirstOfRow = new Field();
 
@@ -42,8 +41,6 @@ namespace Minesweeper
                 //for-loop for the width
                 for (int j = 0; j < Width; j++)
                 {
-                    Count++;
-                    
 
                     if (j == 0)
                     {
@@ -161,6 +158,7 @@ namespace Minesweeper
             }
         }
 
+        //Getting a Field that the user wnats to edit
         internal string GetPositionOfField()
         {
             string Input;
@@ -169,15 +167,14 @@ namespace Minesweeper
             {
                 Console.WriteLine("Bitte geben sie die Position des Feldes ein, welches sie Bearbeiten möchten (Bsp. A2)");
                 Input = Console.ReadLine();
-                if (Input.Length < 3 && Input.Length > 0) ;
+                if (Input.Length <= 3 && Input.Length > 0 && Input.Any(c => char.IsDigit(c)) && Input.Any(b => char.IsLetter(b)))
                 {
                     return Input;
                 }
-                
             }
         }
 
-        
+        //Converting the FieldPosition input and setting the position of controler
         internal Field GetSpecificField(string Input)
         {
             
@@ -209,12 +206,14 @@ namespace Minesweeper
             catch (System.FormatException)
             {
                 Console.WriteLine("Falsche Eingabe");
+                Console.ReadLine();
                 //bootleg Lösung
                 return TopLeftField;
             }
             catch (System.NullReferenceException)
             {
-                Console.WriteLine("Error NullException");
+                Console.WriteLine("Error Bitte nochmal versuchen");
+                Console.ReadLine();
                 //bootleg Lösung
                 return TopLeftField;
             }
@@ -232,68 +231,7 @@ namespace Minesweeper
             string EditField = Console.ReadLine();
             return EditField;
         }
-        /*
-        //function for uncovering Field
-        public void UncoverField(Field Controler)
-        {
-            if (Controler.IsBomb == false)
-            {
-                Controler.Value = Controler.CountBombsinArea().ToString();
-                if (Controler.Value == "0")
-                {
-                    UCmultipleFields(Controler);
-                }
-            }
-            else
-            {
-                Console.WriteLine("GAME OVER IT WAS A BOMB");
-                GameOver = true;
 
-            }
-        }
-        */
-        
-        //function for uncovering multiple fields
-        /*
-        public void UCmultipleFields(Field Control)
-        {
-            if (Control.Value == "0")
-            {
-                if (Control.Top != null)
-                {
-                    UncoverField(Control.Top);
-                }
-                if (Control.Left != null)
-                {
-                    UncoverField(Control.Left);
-                }
-                if (Control.Right != null)
-                {
-                    UncoverField(Control.Right);
-                }
-                if (Control.Bottom!= null)
-                {
-                    UncoverField(Control.Bottom);
-                }
-                if (Control.Top != null && Control.Top.Right != null)
-                {
-                    UncoverField(Control.Top.Right);
-                }
-                if (Control.Top != null && Control.Top.Left != null)
-                {
-                    UncoverField(Control.Top.Left);
-                }
-                if (Control.Bottom != null && Control.Bottom.Right != null)
-                {
-                    UncoverField(Control.Bottom.Right);
-                }
-                if (Control.Bottom != null && Control.Bottom.Left != null)
-                {
-                    UncoverField(Control.Bottom.Left);
-                }
-            }
-        }
-        */
         //function for deciding what to to with input
         public void EditField(Field Controler, string EditField)
         {
@@ -311,7 +249,15 @@ namespace Minesweeper
                      {
                          Controler.IsFlagged = true;
                          Controler.Value = "F";
-                         WinCon--;
+                         
+                         if (Controler.IsBomb)
+                         {
+                            WinCon--;
+                         }
+                         else
+                         {
+                             WinCon++;
+                         }
                      }
                      break;
                  //Unflag Field
@@ -323,6 +269,10 @@ namespace Minesweeper
                          if (Controler.IsBomb)
                          {
                              WinCon++;
+                         }
+                         else
+                         {
+                             WinCon--;
                          }
                      }
                      else
@@ -348,13 +298,7 @@ namespace Minesweeper
                      //UncoverField(Controler);
                      break;
             }
-
-            
         }
-
-
-
-
 
     }
     
