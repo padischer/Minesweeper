@@ -6,14 +6,16 @@ namespace Minesweeper
     class Program
     {
 
-
+        //getting input for Grid
         private static Grid CreateGrid()
         {
+            //initializig Vriables
             int Width = 0;
             int Height = 0;
             bool ValidnumHeight = false;
             bool ValidnumWidth = false;
 
+            //getting the input for grid Length
             while (ValidnumHeight == false)
             {
                 try
@@ -38,6 +40,7 @@ namespace Minesweeper
                 
             }
 
+            //getting input for grid Width
             while (ValidnumWidth == false)
             {
                 try
@@ -58,27 +61,26 @@ namespace Minesweeper
                     Console.WriteLine("Das ist keine gültige zahl");
                 }
             }
-
+            //returning Grid
             return new Grid(Width, Height);
         }
 
-        static void End()
-        {
-            return;
-        }
-
+        //Main function
         static void Main(string[] args)
         {
-
+            //Creating a Variable to access Grid
             var grid = CreateGrid();
 
             while (grid.GameOver == false) 
             {
+                //Usual Grid out and input
                 Console.Clear();
                 grid.ShowGrid();
                 string Position = grid.GetPositionOfField();
                 string Interaction = grid.GetEditOfField();
                 grid.EditField(grid.GetSpecificField(Position), Interaction);
+
+                //Winning
                 if (grid.WinCon == 0)
                 {
                     Console.WriteLine("YOU WON ALL MINES HAVE BEEN FLAGGED");

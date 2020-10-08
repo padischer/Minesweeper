@@ -7,12 +7,16 @@ namespace Minesweeper
 {
     class Grid
     {
+        //initializing Variables
         internal int Width { get; set; }
         internal int Height { get; set; }
         public Field TopLeftField { get; set; }
         private int Count = 0;
         internal bool GameOver = false;
         internal int WinCon;
+
+
+        //makking a Grid when the constructor is selected
         public Grid(int width, int height)
         {
             Width = width;
@@ -20,6 +24,8 @@ namespace Minesweeper
 
             TopLeftField = null;
             Field FirstOfRow = null;
+
+            //for-loop for the height
             for (int i = 0; i < Height; i++)
             {
                 Count++;
@@ -31,11 +37,9 @@ namespace Minesweeper
                     TopLeftField = FirstOfRow;
                 }
 
-
-
-
-                
                 Field CurrentField = null;
+
+                //for-loop for the width
                 for (int j = 0; j < Width; j++)
                 {
                     Count++;
@@ -62,15 +66,16 @@ namespace Minesweeper
                         CurrentField.Top = LastFirstOfRow;
                     }
 
+                    //Setting the Value and counting all Bombs in the Grid
                     CurrentField.Value = "?";
-                    
+                    CurrentField.IsUncoverd = false;
                     if (CurrentField.IsBomb)
                     {
                         WinCon++;
                     }
+
+                    //preparing for next loop
                     CurrentField = NewField;
-                    
-                    
 
                     if (i != 0)
                     {
@@ -88,15 +93,16 @@ namespace Minesweeper
 
 
         
-
+        //Displaying the Grid
         public void ShowGrid()
         {
+            //Initializing Variables
             Field tempY = TopLeftField;
             Field tempX = TopLeftField;
             int count = 0;
 
+            //making the top line of the Grid
             Console.Write("      ");
-            //Console.Write("    ");
             for (int i = 0; i < Width; i++)
             {
                 Console.Write(char.ToUpper((char)(i + (int)'a')) + " ");
@@ -105,6 +111,10 @@ namespace Minesweeper
             }
 
             Console.WriteLine();
+
+
+
+            //line that seperates the topLine from Values
             Console.Write("      ");
             for (int i = 0; i < Width; i++)
             {
@@ -113,6 +123,8 @@ namespace Minesweeper
             }
             Console.WriteLine();
 
+
+            //Creating Sideline of Grid
             while (tempY != null)
             {
 
@@ -128,7 +140,11 @@ namespace Minesweeper
                     Console.Write(" ");
                 }
 
+                //line that seperates the Sideline from Values
                 Console.Write("|| ");
+
+                //Loop for writing Values in grid
+
                 while (tempX.Right != null)
                 {
                     
@@ -136,8 +152,11 @@ namespace Minesweeper
                     tempX = tempX.Right;
                     
                 }
+
+                //extra output because else last column would not be displayed
                 Console.WriteLine(tempX.Value);
 
+                //going to nex Line
                 tempY = tempY.Bottom;
             }
         }
@@ -201,19 +220,87 @@ namespace Minesweeper
             }
 
         }
-
+        
+        //function for getting editing input
         public string GetEditOfField()
         {
+            //ask for input
             Console.WriteLine("Was möchten sie in bei diesem Feld machen?");
             Console.WriteLine("1:Flag Field\t2:Unflag Field\t3:Uncover Field");
+
+            //save and return input
             string EditField = Console.ReadLine();
             return EditField;
         }
+        /*
+        //function for uncovering Field
+        public void UncoverField(Field Controler)
+        {
+            if (Controler.IsBomb == false)
+            {
+                Controler.Value = Controler.CountBombsinArea().ToString();
+                if (Controler.Value == "0")
+                {
+                    UCmultipleFields(Controler);
+                }
+            }
+            else
+            {
+                Console.WriteLine("GAME OVER IT WAS A BOMB");
+                GameOver = true;
 
+            }
+        }
+        */
+        
+        //function for uncovering multiple fields
+        /*
+        public void UCmultipleFields(Field Control)
+        {
+            if (Control.Value == "0")
+            {
+                if (Control.Top != null)
+                {
+                    UncoverField(Control.Top);
+                }
+                if (Control.Left != null)
+                {
+                    UncoverField(Control.Left);
+                }
+                if (Control.Right != null)
+                {
+                    UncoverField(Control.Right);
+                }
+                if (Control.Bottom!= null)
+                {
+                    UncoverField(Control.Bottom);
+                }
+                if (Control.Top != null && Control.Top.Right != null)
+                {
+                    UncoverField(Control.Top.Right);
+                }
+                if (Control.Top != null && Control.Top.Left != null)
+                {
+                    UncoverField(Control.Top.Left);
+                }
+                if (Control.Bottom != null && Control.Bottom.Right != null)
+                {
+                    UncoverField(Control.Bottom.Right);
+                }
+                if (Control.Bottom != null && Control.Bottom.Left != null)
+                {
+                    UncoverField(Control.Bottom.Left);
+                }
+            }
+        }
+        */
+        //function for deciding what to to with input
         public void EditField(Field Controler, string EditField)
         {
+            
             switch (EditField)
             {
+                //Flag Field
                  case "1":
                      if (Controler.IsFlagged == true)
                      {
@@ -227,6 +314,7 @@ namespace Minesweeper
                          WinCon--;
                      }
                      break;
+                 //Unflag Field
                  case "2":
                      if (Controler.IsFlagged == true)
                      {
@@ -244,22 +332,27 @@ namespace Minesweeper
                      }
 
                      break;
+                 //Uncover Field
                  case "3":
                      if (Controler.IsBomb == false)
                      {
                          Controler.Value = Controler.CountBombsinArea().ToString();
+                         Controler.UncoverField();
                      }
                      else
                      {
                          Console.WriteLine("GAME OVER IT WAS A BOMB");
                          GameOver = true;
-
                      }
+                    
+                     //UncoverField(Controler);
                      break;
             }
 
             
         }
+
+
 
 
 
