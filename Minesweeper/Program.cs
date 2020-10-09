@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Threading.Channels;
-using System.Timers;
 
 namespace Minesweeper
 {
-    class Program
+    internal class Program
     {
-        
         //getting input for Grid
         private static Grid CreateGrid()
         {
@@ -31,14 +28,11 @@ namespace Minesweeper
                     {
                         Console.WriteLine("Bitte eine richtige Zahl eingeben");
                     }
-                
                 }
                 catch (System.FormatException)
                 {
                     Console.WriteLine("Das ist keine gültige zahl");
                 }
-                
-                
             }
 
             //getting input for grid Width
@@ -66,17 +60,19 @@ namespace Minesweeper
             return new Grid(Width, Height);
         }
 
-        
         //Main function
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
+            var text1 = System.IO.File.ReadAllText(@"C:\Users\svenw\Pictures\Minesweeper.txt");
+            var text2 = System.IO.File.ReadAllText(@"C:\Users\svenw\Pictures\Won.txt");
+
+            Console.WriteLine(text1);
             Stopwatch timer = new Stopwatch();
             //Creating a Variable to access Grid
             var grid = CreateGrid();
             timer.StartTimer();
-            while (grid.GameOver == false) 
+            while (grid.GameOver == false)
             {
-
                 //Usual Grid out and input
                 Console.Clear();
                 grid.ShowGrid();
@@ -87,8 +83,9 @@ namespace Minesweeper
                 //Winning
                 if (grid.WinCon == 0)
                 {
+                    Console.WriteLine(text2);
+                    Console.WriteLine();
                     timer.EndTimer();
-                    Console.WriteLine("YOU WON ALL MINES HAVE BEEN FLAGGED");
                     return;
                 }
             }

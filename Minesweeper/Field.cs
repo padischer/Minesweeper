@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO.MemoryMappedFiles;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace Minesweeper
 {
-    class Field
+    internal class Field
     {
-        
-        Random rnd = new Random();
+        private Random rnd = new Random();
+
         //initializing Variables
         internal bool IsBomb { get; set; }
+
         internal bool IsFlagged { get; set; }
         internal bool IsUncoverd { get; set; }
         internal string Value { get; set; }
@@ -20,14 +17,12 @@ namespace Minesweeper
         public Field Top { get; set; }
         public Field Bottom { get; set; }
 
-
-        
         //deciding if a Field is a bomb in constructor
         public Field()
         {
             int randomnumber;
-            randomnumber = rnd.Next(16, 100);
-            if (randomnumber < 2)
+            randomnumber = rnd.Next(1, 100);
+            if (randomnumber < 16)
             {
                 IsBomb = true;
             }
@@ -36,6 +31,7 @@ namespace Minesweeper
                 IsBomb = false;
             }
         }
+
         //function to uncover field
         public void UncoverField()
         {
@@ -54,7 +50,6 @@ namespace Minesweeper
             //uncover multiple Fields
             if (CountBombsinArea() == 0)
             {
-                
                 Top?.UncoverField();
                 Right?.UncoverField();
                 Left?.UncoverField();
@@ -63,11 +58,9 @@ namespace Minesweeper
                 Top?.Right?.UncoverField();
                 Bottom?.Right?.UncoverField();
                 Bottom?.Left?.UncoverField();
-                
             }
-        
-            
         }
+
         //Count Bombs around a Field
         public int CountBombsinArea()
         {
@@ -109,30 +102,28 @@ namespace Minesweeper
                     BombCount++;
                 }
             }
-            if(Top != null && Top.Left != null)
+            if (Top != null && Top.Left != null)
             {
                 if (Top.Left.IsBomb)
                 {
                     BombCount++;
                 }
             }
-            if(Bottom != null && Bottom.Right != null)
+            if (Bottom != null && Bottom.Right != null)
             {
                 if (Bottom.Right.IsBomb)
                 {
                     BombCount++;
                 }
             }
-            if(Bottom != null && Bottom.Left != null)
+            if (Bottom != null && Bottom.Left != null)
             {
                 if (Bottom.Left.IsBomb)
                 {
                     BombCount++;
                 }
-
             }
 
-            
             return BombCount;
         }
     }

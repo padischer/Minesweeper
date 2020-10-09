@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
 
 namespace Minesweeper
@@ -13,8 +10,6 @@ namespace Minesweeper
 
         internal void Clock()
         {
-            
-
         }
 
         internal void StartTimer()
@@ -39,4 +34,3 @@ namespace Minesweeper
         }
     }
 }
-

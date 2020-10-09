@@ -1,20 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
 
 namespace Minesweeper
 {
-    class Grid
+    internal class Grid
     {
         //initializing Variables
+        private string text3 = System.IO.File.ReadAllText(@"C:\Users\svenw\Pictures\Lost.txt");
+
         internal int Width { get; set; }
         internal int Height { get; set; }
         public Field TopLeftField { get; set; }
         internal bool GameOver = false;
         internal int WinCon;
-
 
         //makking a Grid when the constructor is selected
         public Grid(int width, int height)
@@ -41,20 +39,17 @@ namespace Minesweeper
                 //for-loop for the width
                 for (int j = 0; j < Width; j++)
                 {
-
                     if (j == 0)
                     {
                         CurrentField = FirstOfRow;
                     }
 
                     var NewField = new Field();
-                    
 
-                    if (j != Width-1)
+                    if (j != Width - 1)
                     {
                         CurrentField.Right = NewField;
                         NewField.Left = CurrentField;
-
                     }
 
                     if (i != 0)
@@ -79,17 +74,9 @@ namespace Minesweeper
                         LastFirstOfRow = LastFirstOfRow.Right;
                     }
                 }
-
-
-                
             }
-
-            
-
         }
 
-
-        
         //Displaying the Grid
         public void ShowGrid()
         {
@@ -103,35 +90,26 @@ namespace Minesweeper
             for (int i = 0; i < Width; i++)
             {
                 Console.Write(char.ToUpper((char)(i + (int)'a')) + " ");
-
-
             }
 
             Console.WriteLine();
-
-
 
             //line that seperates the topLine from Values
             Console.Write("      ");
             for (int i = 0; i < Width; i++)
             {
-
                 Console.Write("--");
             }
             Console.WriteLine();
 
-
             //Creating Sideline of Grid
             while (tempY != null)
             {
-
                 count++;
                 Console.Write($"{count} ");
 
-
                 tempX = tempY;
 
-                
                 if (count < 10)
                 {
                     Console.Write(" ");
@@ -144,10 +122,8 @@ namespace Minesweeper
 
                 while (tempX.Right != null)
                 {
-                    
                     Console.Write($"{tempX.Value} ");
                     tempX = tempX.Right;
-                    
                 }
 
                 //extra output because else last column would not be displayed
@@ -177,7 +153,6 @@ namespace Minesweeper
         //Converting the FieldPosition input and setting the position of controler
         internal Field GetSpecificField(string Input)
         {
-            
             try
             {
                 var Controler = TopLeftField;
@@ -188,11 +163,9 @@ namespace Minesweeper
 
                 string YConverter = Input.Substring(1, Input.Length - 1);
                 int y = (int.Parse(YConverter));
-                
 
                 for (int i = 0; i < x; i++)
                 {
-
                     Controler = Controler.Right;
                 }
 
@@ -217,9 +190,8 @@ namespace Minesweeper
                 //bootleg Lösung
                 return TopLeftField;
             }
-
         }
-        
+
         //function for getting editing input
         public string GetEditOfField()
         {
@@ -235,71 +207,68 @@ namespace Minesweeper
         //function for deciding what to to with input
         public void EditField(Field Controler, string EditField)
         {
-            
             switch (EditField)
             {
                 //Flag Field
-                 case "1":
-                     if (Controler.IsFlagged == true)
-                     {
-                         Console.WriteLine("Field is already flagged");
-                         Console.ReadLine();
-                     }
-                     else
-                     {
-                         Controler.IsFlagged = true;
-                         Controler.Value = "F";
-                         
-                         if (Controler.IsBomb)
-                         {
-                            WinCon--;
-                         }
-                         else
-                         {
-                             WinCon++;
-                         }
-                     }
-                     break;
-                 //Unflag Field
-                 case "2":
-                     if (Controler.IsFlagged == true)
-                     {
-                         Controler.IsFlagged = false;
-                         Controler.Value = "?";
-                         if (Controler.IsBomb)
-                         {
-                             WinCon++;
-                         }
-                         else
-                         {
-                             WinCon--;
-                         }
-                     }
-                     else
-                     {
-                         Console.WriteLine("Field is already unflagged");
-                         Console.ReadLine();
-                     }
+                case "1":
+                    if (Controler.IsFlagged == true)
+                    {
+                        Console.WriteLine("Field is already flagged");
+                        Console.ReadLine();
+                    }
+                    else
+                    {
+                        Controler.IsFlagged = true;
+                        Controler.Value = "F";
 
-                     break;
-                 //Uncover Field
-                 case "3":
-                     if (Controler.IsBomb == false)
-                     {
-                         Controler.Value = Controler.CountBombsinArea().ToString();
-                         Controler.UncoverField();
-                     }
-                     else
-                     {
-                         Console.WriteLine("GAME OVER IT WAS A BOMB");
-                         GameOver = true;
-                     }
-                    
-                     //UncoverField(Controler);
-                     break;
+                        if (Controler.IsBomb)
+                        {
+                            WinCon--;
+                        }
+                        else
+                        {
+                            WinCon++;
+                        }
+                    }
+                    break;
+                //Unflag Field
+                case "2":
+                    if (Controler.IsFlagged == true)
+                    {
+                        Controler.IsFlagged = false;
+                        Controler.Value = "?";
+                        if (Controler.IsBomb)
+                        {
+                            WinCon++;
+                        }
+                        else
+                        {
+                            WinCon--;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Field is already unflagged");
+                        Console.ReadLine();
+                    }
+
+                    break;
+                //Uncover Field
+                case "3":
+                    if (Controler.IsBomb == false)
+                    {
+                        Controler.Value = Controler.CountBombsinArea().ToString();
+                        Controler.UncoverField();
+                    }
+                    else
+                    {
+                        Console.WriteLine(text3);
+                        GameOver = true;
+                    }
+
+                    //UncoverField(Controler);
+                    break;
             }
         }
-
     }
-    
 }
