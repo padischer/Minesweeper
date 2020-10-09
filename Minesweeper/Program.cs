@@ -76,12 +76,12 @@ namespace Minesweeper
             Console.WriteLine(text1);
 
             //Creating a Variable to access Grid
-            
-            
-            
+
+
+            var grid = CreateGrid();
             while (Gameover == false)
             {
-                var grid = CreateGrid();
+                
                 var timer = new Stopwatch();
                 timer.StartTimer();
                 //Usual Grid out and input
@@ -90,8 +90,7 @@ namespace Minesweeper
                 string Position = grid.GetPositionOfField();
                 string Interaction = grid.GetEditOfField();
                 grid.EditField(grid.GetSpecificField(Position), Interaction);
-                Condition = grid.WinCon;
-                //Winning
+                //Ending
                 if (grid.WinCon == 0)
                 {
                     Console.WriteLine(text2);

@@ -22,7 +22,7 @@ namespace Minesweeper
         {
             int randomnumber;
             randomnumber = rnd.Next(1, 100);
-            if (randomnumber < 16)
+            if (randomnumber < 3)
             {
                 IsBomb = true;
             }

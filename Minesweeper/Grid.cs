@@ -143,9 +143,10 @@ namespace Minesweeper
             {
                 Console.WriteLine("Bitte geben sie die Position des Feldes ein, welches sie Bearbeiten möchten (Bsp. A2)");
                 Input = Console.ReadLine();
-                Input = Input.ToUpper();
-                if (Input.Length <= 3 && Input.Length > 1 && Input.Any(c => char.IsDigit(c)) && Input.Any(b => char.IsLetter(b)))
+                if (Input.Length <= 3 && Input.Length > 0 && Input.Any(c => char.IsDigit(c)) && Input.Any(b => char.IsLetter(b)))
                 {
+                    return Input;
+                    /*
                     char anfang = Input[0];
                     char middle = Input[1];
                     if (char.IsLetter(anfang))
@@ -160,8 +161,8 @@ namespace Minesweeper
                         }
                     }
                     
-                        
-                    
+                    */
+
                 }
             }
         }
@@ -169,14 +170,14 @@ namespace Minesweeper
         //Converting the FieldPosition input and setting the position of controler
         internal Field GetSpecificField(string Input)
         {
-            
 
-
-            var Controler = TopLeftField;
+            try
+            {
+                var Controler = TopLeftField;
 
                 string XString = Input.Substring(0, 1);
                 char XConverter = XString[0];
-                int x = (int)XConverter - 65;
+                int x = (int) XConverter - 65;
 
                 string YConverter = Input.Substring(1, Input.Length - 1);
                 int y = (int.Parse(YConverter));
@@ -190,10 +191,23 @@ namespace Minesweeper
                 {
                     Controler = Controler.Bottom;
                 }
-
                 return Controler;
-                
+            }
+
             
+            catch (System.FormatException)
+            {
+                Console.WriteLine("Falsche Eingabe");
+                Console.ReadLine();
+                return TopLeftField;
+            }
+            catch (System.NullReferenceException)
+            {
+                Console.WriteLine("Error Bitte nochmal versuchen");
+                Console.ReadLine();
+                return TopLeftField;
+            }
+
         }
 
         //function for getting editing input
