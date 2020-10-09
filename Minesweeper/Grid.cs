@@ -6,7 +6,7 @@ namespace Minesweeper
     internal class Grid
     {
         //initializing Variables
-        private string text3 = System.IO.File.ReadAllText(@"C:\Users\svenw\Pictures\Lost.txt");
+        
 
         internal int Width { get; set; }
         internal int Height { get; set; }
@@ -143,9 +143,25 @@ namespace Minesweeper
             {
                 Console.WriteLine("Bitte geben sie die Position des Feldes ein, welches sie Bearbeiten möchten (Bsp. A2)");
                 Input = Console.ReadLine();
-                if (Input.Length <= 3 && Input.Length > 0 && Input.Any(c => char.IsDigit(c)) && Input.Any(b => char.IsLetter(b)))
+                Input = Input.ToUpper();
+                if (Input.Length <= 3 && Input.Length > 1 && Input.Any(c => char.IsDigit(c)) && Input.Any(b => char.IsLetter(b)))
                 {
-                    return Input;
+                    char anfang = Input[0];
+                    char middle = Input[1];
+                    if (char.IsLetter(anfang))
+                    {
+                        return Input;
+                    }
+                    else
+                    {
+                        if (Input.Length == 3)
+                        {
+                            
+                        }
+                    }
+                    
+                        
+                    
                 }
             }
         }
@@ -153,9 +169,10 @@ namespace Minesweeper
         //Converting the FieldPosition input and setting the position of controler
         internal Field GetSpecificField(string Input)
         {
-            try
-            {
-                var Controler = TopLeftField;
+            
+
+
+            var Controler = TopLeftField;
 
                 string XString = Input.Substring(0, 1);
                 char XConverter = XString[0];
@@ -175,21 +192,8 @@ namespace Minesweeper
                 }
 
                 return Controler;
-            }
-            catch (System.FormatException)
-            {
-                Console.WriteLine("Falsche Eingabe");
-                Console.ReadLine();
-                //bootleg Lösung
-                return TopLeftField;
-            }
-            catch (System.NullReferenceException)
-            {
-                Console.WriteLine("Error Bitte nochmal versuchen");
-                Console.ReadLine();
-                //bootleg Lösung
-                return TopLeftField;
-            }
+                
+            
         }
 
         //function for getting editing input
@@ -262,11 +266,10 @@ namespace Minesweeper
                     }
                     else
                     {
-                        Console.WriteLine(text3);
                         GameOver = true;
                     }
 
-                    //UncoverField(Controler);
+        
                     break;
             }
         }

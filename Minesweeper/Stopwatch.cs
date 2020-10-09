@@ -8,10 +8,6 @@ namespace Minesweeper
         public static int time = 0;
         internal static System.Timers.Timer timer;
 
-        internal void Clock()
-        {
-        }
-
         internal void StartTimer()
         {
             timer = new System.Timers.Timer(1000);

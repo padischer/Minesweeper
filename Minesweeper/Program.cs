@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 
 namespace Minesweeper
 {
     internal class Program
     {
+        
         //getting input for Grid
         private static Grid CreateGrid()
         {
@@ -63,30 +65,43 @@ namespace Minesweeper
         //Main function
         private static void Main(string[] args)
         {
+            Console.Clear();
+            End Finish = new End();
+            int Condition = 0;
             var text1 = System.IO.File.ReadAllText(@"C:\Users\svenw\Pictures\Minesweeper.txt");
             var text2 = System.IO.File.ReadAllText(@"C:\Users\svenw\Pictures\Won.txt");
+            var text3 = System.IO.File.ReadAllText(@"C:\Users\svenw\Pictures\Lost.txt");
+            bool Gameover = false;
 
             Console.WriteLine(text1);
-            Stopwatch timer = new Stopwatch();
+
             //Creating a Variable to access Grid
-            var grid = CreateGrid();
-            timer.StartTimer();
-            while (grid.GameOver == false)
+            
+            
+            
+            while (Gameover == false)
             {
+                var grid = CreateGrid();
+                var timer = new Stopwatch();
+                timer.StartTimer();
                 //Usual Grid out and input
                 Console.Clear();
                 grid.ShowGrid();
                 string Position = grid.GetPositionOfField();
                 string Interaction = grid.GetEditOfField();
                 grid.EditField(grid.GetSpecificField(Position), Interaction);
-
+                Condition = grid.WinCon;
                 //Winning
                 if (grid.WinCon == 0)
                 {
                     Console.WriteLine(text2);
-                    Console.WriteLine();
-                    timer.EndTimer();
-                    return;
+                    Gameover = Finish.Playagain(timer, grid.GameOver);
+                }
+
+                if (grid.GameOver) 
+                {
+                    Console.WriteLine(text3);
+                    Gameover = Finish.Playagain(timer, grid.GameOver);
                 }
             }
         }
